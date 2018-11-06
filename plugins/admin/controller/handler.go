@@ -22,7 +22,7 @@ import (
 // 全局错误处理
 func GlobalDeferHandler(ctx *context.Context) {
 
-	log.Println("[GoAdmin]",
+	log.Println("[Treasure]",
 		ansi.Color(" "+strconv.Itoa(ctx.Response.StatusCode)+" ", "white:blue"),
 		ansi.Color(" "+string(ctx.Method()[:])+"   ", "white:blue+h"),
 		ctx.Path())

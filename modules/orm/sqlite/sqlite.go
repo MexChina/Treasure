@@ -4,7 +4,7 @@ import (
 	"database/sql"
 	_ "github.com/mattn/go-sqlite3"
 	"github.com/MexChina/Treasure/modules/config"
-	"github.com/MexChina/Treasure/modules/connections/performer"
+	"github.com/MexChina/Treasure/modules/orm/performer"
 	"sync"
 )
 

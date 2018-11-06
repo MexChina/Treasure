@@ -4,10 +4,10 @@ import (
 	"encoding/json"
 	"github.com/MexChina/Treasure/context"
 	"github.com/MexChina/Treasure/modules/config"
-	"github.com/MexChina/Treasure/modules/connections"
 	"github.com/MexChina/Treasure/plugins/admin/modules"
 	"net/http"
 	"time"
+	"github.com/MexChina/Treasure/modules/orm"
 )
 
 var (
@@ -102,7 +102,7 @@ func InitSession(ctx *context.Context) *Session {
 type MysqlDriver struct{}
 
 func (driver *MysqlDriver) Load(sid string) map[string]interface{} {
-	sesModel, _ := connections.GetConnection().Query("select * from goadmin_session where sid = ?", sid)
+	sesModel, _ := orm.GetConnection().Query("select * from goadmin_session where sid = ?", sid)
 	if len(sesModel) < 1 {
 		return map[string]interface{}{}
 	} else {
@@ -115,15 +115,15 @@ func (driver *MysqlDriver) Load(sid string) map[string]interface{} {
 func (driver *MysqlDriver) Update(sid string, values map[string]interface{}) {
 	if sid != "" {
 		if len(values) == 0 {
-			connections.GetConnection().Exec("delete from goadmin_session where sid = ?", sid)
+			orm.GetConnection().Exec("delete from goadmin_session where sid = ?", sid)
 			return
 		}
 		valuesByte, _ := json.Marshal(values)
-		sesModel, _ := connections.GetConnection().Query("select * from goadmin_session where sid = ?", sid)
+		sesModel, _ := orm.GetConnection().Query("select * from goadmin_session where sid = ?", sid)
 		if len(sesModel) < 1 {
-			connections.GetConnection().Exec("insert into goadmin_session (`values`, sid) values (?, ?)", string(valuesByte), sid)
+			orm.GetConnection().Exec("insert into goadmin_session (`values`, sid) values (?, ?)", string(valuesByte), sid)
 		} else {
-			connections.GetConnection().Exec("update goadmin_session set `values` = ? where sid = ?", string(valuesByte), sid)
+			orm.GetConnection().Exec("update goadmin_session set `values` = ? where sid = ?", string(valuesByte), sid)
 		}
 	}
 }

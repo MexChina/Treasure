@@ -2,11 +2,11 @@ package menu
 
 import (
 	"github.com/MexChina/Treasure/modules/auth"
-	"github.com/MexChina/Treasure/modules/connections"
 	"github.com/MexChina/Treasure/modules/language"
 	"strconv"
 	"sync"
 	"sync/atomic"
+	"github.com/MexChina/Treasure/modules/orm"
 )
 
 type Menu struct {
@@ -70,7 +70,7 @@ func SetGlobalMenu(user auth.User) {
 	)
 
 	if user.IsSuperAdmin() {
-		menus, _ = connections.GetConnection().Query("select * from goadmin_menu where id > 0 order by `order` asc")
+		menus, _ = orm.GetConnection().Query("select * from goadmin_menu where id > 0 order by `order` asc")
 	} else {
 
 		qmark := ""
@@ -80,7 +80,7 @@ func SetGlobalMenu(user auth.User) {
 			ids = append(ids, user.Menus[i])
 		}
 
-		menus, _ = connections.GetConnection().Query("select * from goadmin_menu where id in ("+qmark[:len(qmark)-1]+") "+
+		menus, _ = orm.GetConnection().Query("select * from goadmin_menu where id in ("+qmark[:len(qmark)-1]+") "+
 			"order by `order` asc", ids...)
 	}
 
@@ -143,7 +143,7 @@ func ConstructMenuTree(menus []map[string]interface{}, parentId int64) []MenuIte
 }
 
 func GetMenuItemById(id string) MenuItem {
-	menu, _ := connections.GetConnection().Query("select * from goadmin_menu where id = ?", id)
+	menu, _ := orm.GetConnection().Query("select * from goadmin_menu where id = ?", id)
 
 	return MenuItem{
 		Name:         menu[0]["title"].(string),

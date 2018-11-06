@@ -5,7 +5,7 @@ import (
 	"fmt"
 	_ "github.com/lib/pq"
 	"github.com/MexChina/Treasure/modules/config"
-	"github.com/MexChina/Treasure/modules/connections/performer"
+	"github.com/MexChina/Treasure/modules/orm/performer"
 	"net/url"
 	"strconv"
 	"strings"

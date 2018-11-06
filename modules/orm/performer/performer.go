@@ -2,7 +2,7 @@ package performer
 
 import (
 	"database/sql"
-	"github.com/MexChina/Treasure/modules/connections/converter"
+	"github.com/MexChina/Treasure/modules/orm/converter"
 	"regexp"
 	"strings"
 )

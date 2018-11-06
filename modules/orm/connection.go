@@ -1,11 +1,11 @@
-package connections
+package orm
 
 import (
 	"database/sql"
 	"github.com/MexChina/Treasure/modules/config"
-	"github.com/MexChina/Treasure/modules/connections/mysql"
-	"github.com/MexChina/Treasure/modules/connections/postgresql"
-	"github.com/MexChina/Treasure/modules/connections/sqlite"
+	"github.com/MexChina/Treasure/modules/orm/mysql"
+	"github.com/MexChina/Treasure/modules/orm/postgresql"
+	"github.com/MexChina/Treasure/modules/orm/sqlite"
 )
 
 type Connection interface {

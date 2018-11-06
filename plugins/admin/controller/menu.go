@@ -5,13 +5,13 @@ import (
 	"encoding/json"
 	"github.com/MexChina/Treasure/context"
 	"github.com/MexChina/Treasure/modules/auth"
-	"github.com/MexChina/Treasure/modules/connections"
 	"github.com/MexChina/Treasure/modules/menu"
 	"github.com/MexChina/Treasure/plugins/admin/models"
 	"github.com/MexChina/Treasure/template"
 	"github.com/MexChina/Treasure/template/types"
 	template2 "html/template"
 	"net/http"
+	"github.com/MexChina/Treasure/modules/orm"
 )
 
 // 显示菜单
@@ -71,7 +71,7 @@ func DeleteMenu(ctx *context.Context) {
 
 	buffer := new(bytes.Buffer)
 
-	connections.GetConnection().Exec("delete from goadmin_menu where id = ?", id)
+	orm.GetConnection().Exec("delete from goadmin_menu where id = ?", id)
 
 	menu.SetGlobalMenu(user)
 
@@ -98,13 +98,13 @@ func EditMenu(ctx *context.Context) {
 	roles := ctx.Request.Form["roles[]"]
 
 	for _, roleId := range roles {
-		checkRoleMenu, _ := connections.GetConnection().Query("select * from goadmin_role_menu where role_id = ? and menu_id = ?", roleId, id)
+		checkRoleMenu, _ := orm.GetConnection().Query("select * from goadmin_role_menu where role_id = ? and menu_id = ?", roleId, id)
 		if len(checkRoleMenu) < 1 {
-			connections.GetConnection().Exec("insert into goadmin_role_menu (menu_id, role_id) values (?, ?)", id, roleId)
+			orm.GetConnection().Exec("insert into goadmin_role_menu (menu_id, role_id) values (?, ?)", id, roleId)
 		}
 	}
 
-	connections.GetConnection().Exec("update goadmin_menu set title = ?, parent_id = ?, icon = ?, uri = ? where id = ?",
+	orm.GetConnection().Exec("update goadmin_menu set title = ?, parent_id = ?, icon = ?, uri = ? where id = ?",
 		title, parentId, icon, uri, id)
 
 	menu.SetGlobalMenu(ctx.UserValue["user"].(auth.User))
@@ -128,7 +128,7 @@ func NewMenu(ctx *context.Context) {
 
 	user := ctx.UserValue["user"].(auth.User)
 
-	res := connections.GetConnection().Exec("insert into goadmin_menu (title, parent_id, icon, uri, `order`) values (?, ?, ?, ?, ?)",
+	res := orm.GetConnection().Exec("insert into goadmin_menu (title, parent_id, icon, uri, `order`) values (?, ?, ?, ?, ?)",
 		title, parentId, icon, uri, (menu.GetGlobalMenu(user)).MaxOrder+1)
 
 	roles := ctx.Request.Form["roles[]"]
@@ -136,7 +136,7 @@ func NewMenu(ctx *context.Context) {
 	id, _ := res.LastInsertId()
 
 	for _, roleId := range roles {
-		connections.GetConnection().Exec("insert into goadmin_role_menu (menu_id, role_id) values (?, ?)", id, roleId)
+		orm.GetConnection().Exec("insert into goadmin_role_menu (menu_id, role_id) values (?, ?)", id, roleId)
 	}
 
 	globalMenu := menu.GetGlobalMenu(user)
@@ -158,13 +158,13 @@ func MenuOrder(ctx *context.Context) {
 	count := 1
 	for _, v := range data {
 		if child, ok := v["children"]; ok {
-			connections.GetConnection().Exec("update goadmin_menu set `order` = ? where id = ?", count, v["id"])
+			orm.GetConnection().Exec("update goadmin_menu set `order` = ? where id = ?", count, v["id"])
 			for _, v2 := range child.([]interface{}) {
-				connections.GetConnection().Exec("update goadmin_menu set `order` = ? where id = ?", count, v2.(map[string]interface{})["id"])
+				orm.GetConnection().Exec("update goadmin_menu set `order` = ? where id = ?", count, v2.(map[string]interface{})["id"])
 				count++
 			}
 		} else {
-			connections.GetConnection().Exec("update goadmin_menu set `order` = ? where id = ?", count, v["id"])
+			orm.GetConnection().Exec("update goadmin_menu set `order` = ? where id = ?", count, v["id"])
 			count++
 		}
 	}

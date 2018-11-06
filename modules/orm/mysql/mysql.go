@@ -6,8 +6,8 @@ import (
 	"errors"
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/MexChina/Treasure/modules/config"
-	"github.com/MexChina/Treasure/modules/connections/converter"
-	"github.com/MexChina/Treasure/modules/connections/performer"
+	"github.com/MexChina/Treasure/modules/orm/converter"
+	"github.com/MexChina/Treasure/modules/orm/performer"
 	"sync"
 )
 

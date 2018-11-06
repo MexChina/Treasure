@@ -3,10 +3,10 @@ package admin
 import (
 	"github.com/MexChina/Treasure/context"
 	"github.com/MexChina/Treasure/modules/config"
-	"github.com/MexChina/Treasure/modules/connections"
 	"github.com/MexChina/Treasure/plugins"
 	"github.com/MexChina/Treasure/plugins/admin/controller"
 	"github.com/MexChina/Treasure/plugins/admin/models"
+	"github.com/MexChina/Treasure/modules/orm"
 )
 
 type Admin struct {
@@ -20,7 +20,7 @@ func (admin *Admin) InitPlugin() {
 
 	// Init database
 	for _, databaseCfg := range cfg.DATABASE {
-		connections.GetConnectionByDriver(databaseCfg.DRIVER).InitDB(map[string]config.Database{
+		orm.GetConnectionByDriver(databaseCfg.DRIVER).InitDB(map[string]config.Database{
 			"default": databaseCfg,
 		})
 	}
