@@ -37,11 +37,13 @@ func InitRouter(prefix string) *context.App {
 			// auth
 			app.GET("/logout", controller.Logout)
 
+			//home
+			app.GET("/",controller.ShowDashboard)
+
 			// menus
 			app.GET("/menu", controller.ShowMenu)
 			app.POST("/menu/delete", controller.DeleteMenu)
 			app.POST("/menu/new", controller.NewMenu)
-			//app.GET("/menu/new", controller.ShowMenu) // TODO: this is a bug of the tire
 			app.POST("/menu/edit", controller.EditMenu)
 			app.GET("/menu/edit/show", controller.ShowEditMenu)
 			app.POST("/menu/order", controller.MenuOrder)

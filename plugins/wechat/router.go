@@ -1,4 +1,4 @@
-package redisclient
+package wechat
 
 import (
 	"github.com/MexChina/Treasure/context"
@@ -17,7 +17,13 @@ func InitRouter(prefix string) *context.App {
 		controller.ShowErrorPage(ctx, "permission denied")
 	})
 
-	app.GET(prefix+"/redisclient", authenticator.Middleware(Show))
+	app.GET(prefix+"/example", authenticator.Middleware(TestHandler))
+
+	if prefix == "" {
+		app.GET(prefix+"/", authenticator.Middleware(TestHandler))
+	} else {
+		app.GET(prefix, authenticator.Middleware(TestHandler))
+	}
 
 	return app
 }

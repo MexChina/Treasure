@@ -1,4 +1,4 @@
-package example
+package wechat
 
 import (
 	"github.com/MexChina/Treasure/context"

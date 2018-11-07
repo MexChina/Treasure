@@ -1,21 +1,17 @@
 package main
 
 import (
+	"github.com/valyala/fasthttp"
 	"github.com/buaazp/fasthttprouter"
 	"github.com/MexChina/Treasure/engine"
-	"github.com/MexChina/Treasure/examples/datamodel"
 	"github.com/MexChina/Treasure/modules/config"
 	"github.com/MexChina/Treasure/plugins/admin"
-	"github.com/MexChina/Treasure/plugins/example"
 	"log"
-	"github.com/valyala/fasthttp"
 )
 
 func main() {
 	router := fasthttprouter.New()
-
 	eng := engine.Default()
-
 	cfg := config.Config{
 		DATABASE: []config.Database{
 			{
@@ -41,12 +37,8 @@ func main() {
 		},
 	}
 
-	adminPlugin := admin.NewAdmin(datamodel.Generators)
-	examplePlugin := example.NewExample()
-
-	if err := eng.AddConfig(cfg).AddPlugins(adminPlugin, examplePlugin).Use(router); err != nil {
+	if err := eng.AddConfig(cfg).AddPlugins(admin.NewAdmin()).Use(router); err != nil {
 		panic(err)
 	}
-
 	log.Fatalln(fasthttp.ListenAndServe(":8897", router.Handler))
 }

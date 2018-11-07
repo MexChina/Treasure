@@ -45,8 +45,9 @@ func (admin *Admin) InitPlugin() {
 
 var App = new(Admin)
 
-func NewAdmin(tableCfg map[string]models.TableGenerator) *Admin {
-	App.tableCfg = tableCfg
+//func NewAdmin(tableCfg map[string]models.TableGenerator) *Admin {
+func NewAdmin() *Admin {
+	//App.tableCfg = tableCfg
 	return App
 }
 
