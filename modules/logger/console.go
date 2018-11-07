@@ -30,14 +30,14 @@ var colors = []brush{
 	newBrush("1;32"), // Trace              绿色
 }
 
-type consoleLogger struct {
+type ConsoleLogger struct {
 	sync.Mutex
 	Level    string `json:"level"`
 	Colorful bool   `json:"color"`
 	LogLevel int
 }
 
-func (c *consoleLogger) Init(jsonConfig string) error {
+func (c *ConsoleLogger) Init(jsonConfig string) error {
 	if len(jsonConfig) == 0 {
 		return nil
 	}
@@ -58,7 +58,7 @@ func (c *consoleLogger) Init(jsonConfig string) error {
 	return err
 }
 
-func (c *consoleLogger) LogWrite(when time.Time, msgText interface{}, level int) error {
+func (c *ConsoleLogger) LogWrite(when time.Time, msgText interface{}, level int) error {
 	if level > c.LogLevel {
 		return nil
 	}
@@ -73,18 +73,18 @@ func (c *consoleLogger) LogWrite(when time.Time, msgText interface{}, level int)
 	return nil
 }
 
-func (c *consoleLogger) Destroy() {
+func (c *ConsoleLogger) Destroy() {
 
 }
 
-func (c *consoleLogger) printlnConsole(when time.Time, msg string) {
+func (c *ConsoleLogger) printlnConsole(when time.Time, msg string) {
 	c.Lock()
 	defer c.Unlock()
 	os.Stdout.Write(append([]byte(msg), '\n'))
 }
 
 func init() {
-	Register(AdapterConsole, &consoleLogger{
+	Register(AdapterConsole, &ConsoleLogger{
 		LogLevel: LevelDebug,
 		Colorful: runtime.GOOS != "windows",
 	})

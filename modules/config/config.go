@@ -7,6 +7,7 @@ package config
 import (
 	"html/template"
 	"sync"
+	"github.com/MexChina/Treasure/modules/logger"
 )
 
 // Database is a type of database connection config.
@@ -33,6 +34,7 @@ type Store struct {
 	PATH   string
 	PREFIX string
 }
+
 
 // Config type is the global config of goAdmin. It will be
 // initialized in the engine.
@@ -70,6 +72,9 @@ type Config struct {
 
 	// The url redirect to after login
 	INDEX string
+
+	//Logger
+	LOGGER logger.LogConfig
 }
 
 var (

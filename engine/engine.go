@@ -8,6 +8,7 @@ import (
 	"github.com/MexChina/Treasure/modules/config"
 	"github.com/MexChina/Treasure/plugins"
 	"github.com/MexChina/Treasure/template/types"
+	"github.com/MexChina/Treasure/modules/logger"
 )
 
 // Engine is the core components of goAdmin. It has two attributes.
@@ -33,6 +34,12 @@ func (eng *Engine) Use(router interface{}) error {
 		panic("adapter is nil, import the default adapter or use AddAdapter method add the adapter")
 	}
 	return eng.Adapter.Use(router, eng.PluginList)
+}
+
+//addLogger set the global logger
+func (eng *Engine) AddLogger(cfg logger.LogConfig) *Engine{
+	logger.SetLogger(cfg)
+	return eng
 }
 
 // AddPlugins add the plugins and initialize them.

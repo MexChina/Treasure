@@ -10,8 +10,6 @@ import (
 )
 
 func main() {
-	router := fasthttprouter.New()
-	eng := engine.Default()
 	cfg := config.Config{
 		DATABASE: []config.Database{
 			{
@@ -25,21 +23,28 @@ func main() {
 				DRIVER:       "mysql",
 			},
 		},
-		DOMAIN: "localhost",
-		PREFIX: "admin",
-		INDEX:  "/",
-		THEME: "",
-		TITLE: "Treasure",
+		DOMAIN:   "localhost",
+		PREFIX:   "admin",
+		INDEX:    "/",
+		THEME:    "",
+		TITLE:    "Treasure",
 		LANGUAGE: "cn",
 		STORE: config.Store{
 			PATH:   "./uploads",
 			PREFIX: "uploads",
 		},
+		LOGGER: logger.LogConfig{
+			Console:&logger.ConsoleLogger{
+				Level:"DEBG",
+				Colorful:true,
+			},
+		},
 	}
+	router := fasthttprouter.New()
+	eng := engine.Default()
 
-	logger.SetLogger(`{"Console": {"level": "DEBG,TRAC","color":true}}`)
-	if err := eng.AddConfig(cfg).AddPlugins(admin.NewAdmin()).Use(router); err != nil {
-		panic(err)
+	if err := eng.AddConfig(cfg).AddPlugins(admin.NewAdmin()).AddLogger(cfg.LOGGER).Use(router); err != nil {
+		logger.Painc(err)
 	}
 	logger.Fatal(fasthttp.ListenAndServe(":8897", router.Handler))
 }

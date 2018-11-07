@@ -14,7 +14,7 @@ import (
 	"time"
 )
 
-type fileLogger struct {
+type FileLogger struct {
 	sync.RWMutex
 	fileWriter *os.File
 
@@ -35,18 +35,7 @@ type fileLogger struct {
 	fileNameOnly, suffix string
 }
 
-// Init file logger with json config.
-// jsonConfig like:
-//	{
-//	"filename":"log/app.log",
-//	"maxlines":10000,
-//	"maxsize":1024,
-//	"daily":true,
-//	"maxdays":15,
-//	"rotate":true,
-//  	"permit":"0600"
-//	}
-func (f *fileLogger) Init(jsonConfig string) error {
+func (f *FileLogger) Init(jsonConfig string) error {
 	fmt.Printf("fileLogger Init:%s\n", jsonConfig)
 	if len(jsonConfig) == 0 {
 		return nil
@@ -71,7 +60,7 @@ func (f *fileLogger) Init(jsonConfig string) error {
 	return err
 }
 
-func (f *fileLogger) needCreateFresh(size int, day int) bool {
+func (f *FileLogger) needCreateFresh(size int, day int) bool {
 	return (f.MaxLines > 0 && f.maxLinesCurLines >= f.MaxLines) ||
 		(f.MaxSize > 0 && f.maxSizeCurSize+size >= f.MaxSize) ||
 		(f.Daily && day != f.dailyOpenDate)
@@ -79,7 +68,7 @@ func (f *fileLogger) needCreateFresh(size int, day int) bool {
 }
 
 // WriteMsg write logger message into file.
-func (f *fileLogger) LogWrite(when time.Time, msgText interface{}, level int) error {
+func (f *FileLogger) LogWrite(when time.Time, msgText interface{}, level int) error {
 	msg, ok := msgText.(string)
 	if !ok {
 		return nil
@@ -116,7 +105,7 @@ func (f *fileLogger) LogWrite(when time.Time, msgText interface{}, level int) er
 	return err
 }
 
-func (f *fileLogger) createLogFile() (*os.File, error) {
+func (f *FileLogger) createLogFile() (*os.File, error) {
 	// Open the log file
 	perm, err := strconv.ParseInt(f.PermitMask, 8, 64)
 	if err != nil {
@@ -130,7 +119,7 @@ func (f *fileLogger) createLogFile() (*os.File, error) {
 	return fd, err
 }
 
-func (f *fileLogger) newFile() error {
+func (f *FileLogger) newFile() error {
 	file, err := f.createLogFile()
 	if err != nil {
 		return err
@@ -158,7 +147,7 @@ func (f *fileLogger) newFile() error {
 	return nil
 }
 
-func (f *fileLogger) lines() (int, error) {
+func (f *FileLogger) lines() (int, error) {
 	fd, err := os.Open(f.Filename)
 	if err != nil {
 		return 0, err
@@ -186,7 +175,7 @@ func (f *fileLogger) lines() (int, error) {
 }
 
 // new file name like  xx.2013-01-01.001.log
-func (f *fileLogger) createFreshFile(logTime time.Time) error {
+func (f *FileLogger) createFreshFile(logTime time.Time) error {
 	// file exists
 	// Find the next available number
 	num := 1
@@ -246,7 +235,7 @@ RESTART_LOGGER:
 	return nil
 }
 
-func (f *fileLogger) deleteOldLog() {
+func (f *FileLogger) deleteOldLog() {
 	dir := filepath.Dir(f.Filename)
 	filepath.Walk(dir, func(path string, info os.FileInfo, err error) (returnErr error) {
 		defer func() {
@@ -269,12 +258,12 @@ func (f *fileLogger) deleteOldLog() {
 	})
 }
 
-func (f *fileLogger) Destroy() {
+func (f *FileLogger) Destroy() {
 	f.fileWriter.Close()
 }
 
 func init() {
-	Register(AdapterFile, &fileLogger{
+	Register(AdapterFile, &FileLogger{
 		Daily:      true,
 		MaxDays:    7,
 		Append:     true,

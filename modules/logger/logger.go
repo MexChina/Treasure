@@ -3,7 +3,6 @@ package logger
 import (
 	"encoding/json"
 	"fmt"
-	"io/ioutil"
 	"os"
 	"runtime"
 	"strings"
@@ -118,11 +117,11 @@ func NewLogger(depth ...int) *LocalLogger {
 }
 
 //配置文件
-type logConfig struct {
-	TimeFormat string         `json:"TimeFormat"`
-	Console    *consoleLogger `json:"Console,omitempty"`
-	File       *fileLogger    `json:"File,omitempty"`
-	Conn       *connLogger    `json:"Conn,omitempty"`
+type LogConfig struct {
+	TimeFormat string        `json:"TimeFormat"`
+	Console    *ConsoleLogger `json:"Console"`
+	File       *FileLogger   `json:"File"`
+	Conn       *ConnLogger   `json:"Conn"`
 }
 
 func init() {
@@ -304,49 +303,13 @@ func (this *LocalLogger) SetCallDepth(depth int) {
 	this.callDepth = depth
 }
 
-// GetlocalLogger returns the defaultLogger
-func GetlocalLogger() *LocalLogger {
-	return defaultLogger
-}
-
 // Reset will remove all the adapter
 func Reset() {
 	defaultLogger.Reset()
 }
 
 // param 可以是log配置文件名，也可以是log配置内容,默认DEBUG输出到控制台
-func SetLogger(param ...string) error {
-	if 0 == len(param) {
-		//默认只输出到控制台
-		defaultLogger.SetLogger(AdapterConsole)
-		return nil
-	}
-
-	c := param[0]
-	conf := new(logConfig)
-	err := json.Unmarshal([]byte(c), conf)
-	if err != nil { //不是json，就认为是配置文件，如果都不是，打印日志，然后退出
-		// Open the configuration file
-		fd, err := os.Open(c)
-		if err != nil {
-			fmt.Fprintf(os.Stderr, "Could not open %s for configure: %s\n", c, err)
-			os.Exit(1)
-			return err
-		}
-
-		contents, err := ioutil.ReadAll(fd)
-		if err != nil {
-			fmt.Fprintf(os.Stderr, "Could not read %s: %s\n", c, err)
-			os.Exit(1)
-			return err
-		}
-		err = json.Unmarshal(contents, conf)
-		if err != nil {
-			fmt.Fprintf(os.Stderr, "Could not Unmarshal %s: %s\n", contents, err)
-			os.Exit(1)
-			return err
-		}
-	}
+func SetLogger(conf LogConfig) error {
 	if conf.TimeFormat != "" {
 		defaultLogger.timeFormat = conf.TimeFormat
 	}
