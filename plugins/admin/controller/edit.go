@@ -15,22 +15,14 @@ import (
 
 // 显示表单
 func ShowForm(ctx *context.Context) {
-
 	defer GlobalDeferHandler(ctx)
-
 	user := ctx.UserValue["user"].(auth.User)
-
 	prefix := ctx.Request.URL.Query().Get("prefix")
-
 	id := ctx.Request.URL.Query().Get("id")
-
 	formData, title, description := models.TableList[prefix].GetDataFromDatabaseWithId(prefix, id)
-
 	tmpl, tmplName := template.Get("adminlte").GetTemplate(ctx.Request.Header.Get("X-PJAX") == "true")
-
 	path := ctx.Path()
 	menu.GlobalMenu.SetActiveClass(path)
-
 	page := ctx.Request.URL.Query().Get("page")
 	if page == "" {
 		page = "1"
@@ -50,7 +42,6 @@ func ShowForm(ctx *context.Context) {
 	}
 
 	ctx.Response.Header.Add("Content-Type", "text/html; charset=utf-8")
-
 	buf := new(bytes.Buffer)
 	tmpl.ExecuteTemplate(buf, tmplName, types.Page{
 		User: user,
@@ -79,22 +70,16 @@ func ShowForm(ctx *context.Context) {
 
 // 编辑数据
 func EditForm(ctx *context.Context) {
-
 	defer GlobalDeferHandler(ctx)
-
 	token := ctx.Request.FormValue("_t")
-
 	if !auth.TokenHelper.CheckToken(token) {
 		ctx.SetStatusCode(http.StatusBadRequest)
 		ctx.WriteString(`{"code":400, "msg":"编辑失败"}`)
 		return
 	}
-
 	prefix := ctx.Request.URL.Query().Get("prefix")
 	user := ctx.UserValue["user"].(auth.User)
-
 	form := ctx.Request.MultipartForm
-
 	path := ctx.Path()
 	menu.GlobalMenu.SetActiveClass(path)
 

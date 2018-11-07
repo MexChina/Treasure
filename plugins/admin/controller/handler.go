@@ -4,7 +4,6 @@ import (
 	"bytes"
 	"fmt"
 	"github.com/go-sql-driver/mysql"
-	"github.com/mgutz/ansi"
 	"github.com/MexChina/Treasure/context"
 	"github.com/MexChina/Treasure/modules/auth"
 	"github.com/MexChina/Treasure/modules/menu"
@@ -12,26 +11,20 @@ import (
 	"github.com/MexChina/Treasure/template"
 	"github.com/MexChina/Treasure/template/types"
 	template2 "html/template"
-	"log"
 	"net/http"
 	"regexp"
 	"runtime/debug"
-	"strconv"
+	"github.com/MexChina/Treasure/modules/logger"
 )
 
 // 全局错误处理
 func GlobalDeferHandler(ctx *context.Context) {
-
-	log.Println("[Treasure]",
-		ansi.Color(" "+strconv.Itoa(ctx.Response.StatusCode)+" ", "white:blue"),
-		ansi.Color(" "+string(ctx.Method()[:])+"   ", "white:blue+h"),
-		ctx.Path())
-
+	logger.Debug(ctx.Method(),ctx.Path())
 	RecordOperationLog(ctx)
 
 	if err := recover(); err != nil {
-		fmt.Println(err)
-		fmt.Println(string(debug.Stack()[:]))
+		logger.Error(err)
+		logger.Debug(debug.Stack())
 
 		var (
 			errMsg     string
@@ -44,6 +37,7 @@ func GlobalDeferHandler(ctx *context.Context) {
 			} else {
 				errMsg = fmt.Sprint("%v", err)
 			}
+			logger.Alert(errMsg)
 		}
 
 		alert := template.Get(Config.THEME).Alert().SetTitle(template2.HTML(`<i class="icon fa fa-warning"></i> Error!`)).

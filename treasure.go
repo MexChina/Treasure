@@ -6,7 +6,7 @@ import (
 	"github.com/MexChina/Treasure/engine"
 	"github.com/MexChina/Treasure/modules/config"
 	"github.com/MexChina/Treasure/plugins/admin"
-	"log"
+	"github.com/MexChina/Treasure/modules/logger"
 )
 
 func main() {
@@ -37,8 +37,9 @@ func main() {
 		},
 	}
 
+	logger.SetLogger(`{"Console": {"level": "DEBG,TRAC","color":true}}`)
 	if err := eng.AddConfig(cfg).AddPlugins(admin.NewAdmin()).Use(router); err != nil {
 		panic(err)
 	}
-	log.Fatalln(fasthttp.ListenAndServe(":8897", router.Handler))
+	logger.Fatal(fasthttp.ListenAndServe(":8897", router.Handler))
 }
