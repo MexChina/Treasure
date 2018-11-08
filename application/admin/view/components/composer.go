@@ -4,7 +4,6 @@ import (
 	"bytes"
 	"fmt"
 	"github.com/MexChina/Treasure/modules/language"
-	"github.com/MexChina/Treasure/template/adminlte/tmpl"
 	"html/template"
 	"strings"
 )
@@ -12,7 +11,7 @@ import (
 func ComposeHtml(compo interface{}, templateName ...string) template.HTML {
 	var text = ""
 	for _, v := range templateName {
-		text += tmpl.List["components/"+v]
+		text += List["components/"+v]
 	}
 
 	tmpla, err := template.New("comp").Funcs(template.FuncMap{

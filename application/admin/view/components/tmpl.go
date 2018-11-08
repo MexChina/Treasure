@@ -1,4 +1,4 @@
-package tmpl
+package components
 
 var List = map[string]string{"admin_panel": `{{define "admin_panel"}}
 <div class="navbar-custom-menu">

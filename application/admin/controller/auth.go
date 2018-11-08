@@ -6,7 +6,7 @@ import (
 	"github.com/MexChina/Treasure/modules/auth"
 	"github.com/MexChina/Treasure/modules/menu"
 	"net/http"
-	"github.com/MexChina/Treasure/template/adminlte"
+	"github.com/MexChina/Treasure/application/admin/view"
 )
 
 func Auth(ctx *context.Context) {
@@ -38,7 +38,7 @@ func Logout(ctx *context.Context) {
 func ShowLogin(ctx *context.Context) {
 	defer GlobalDeferHandler(ctx)
 	buf := new(bytes.Buffer)
-	tmpler := adminlte.Adminlte.GetHtml("login")
+	tmpler := view.Adminlte.GetHtml("login")
 	tmpler.ExecuteTemplate(buf,"login", struct {
 		AssertRootUrl string
 	}{Config.PREFIX})

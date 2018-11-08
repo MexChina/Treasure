@@ -1,11 +1,10 @@
-package adminlte
+package view
 
 import (
 	"github.com/MexChina/Treasure/modules/language"
 	"github.com/MexChina/Treasure/modules/menu"
 	"github.com/MexChina/Treasure/modules/config"
 	"github.com/MexChina/Treasure/application/admin/view/components"
-	"github.com/MexChina/Treasure/template/adminlte/tmpl"
 	"github.com/MexChina/Treasure/application/admin/view/types"
 	"html/template"
 	"github.com/MexChina/Treasure/modules/logger"
@@ -25,7 +24,7 @@ func GetAdminlte() *Theme {
 }
 
 func (*Theme) GetTmplList() map[string]string {
-	return tmpl.List
+	return components.List
 }
 
 func (*Theme) GetTemplate(isPjax bool) (tmpler *template.Template, name string) {
@@ -39,17 +38,17 @@ func (*Theme) GetTemplate(isPjax bool) (tmpler *template.Template, name string) 
 		tmpler, err = template.New("layout").Funcs(template.FuncMap{
 			"lang":     language.Get,
 			"langHtml": language.GetFromHtml,
-		}).Parse(tmpl.List["layout"] +
-			tmpl.List["head"] + tmpl.List["header"] + tmpl.List["sidebar"] +
-			tmpl.List["footer"] + tmpl.List["js"] + tmpl.List["menu"] +
-			tmpl.List["admin_panel"] + tmpl.List["content"])
+		}).Parse(components.List["layout"] +
+			components.List["head"] + components.List["header"] + components.List["sidebar"] +
+			components.List["footer"] + components.List["js"] + components.List["menu"] +
+			components.List["admin_panel"] + components.List["content"])
 
 	} else {
 		name = "content"
 		tmpler, err = template.New("content").Funcs(template.FuncMap{
 			"lang":     language.Get,
 			"langHtml": language.GetFromHtml,
-		}).Parse(tmpl.List["admin_panel"] + tmpl.List["content"])
+		}).Parse(components.List["admin_panel"] + components.List["content"])
 	}
 
 	if err != nil {

@@ -1,4 +1,4 @@
-package adminlte
+package view
 
 func ReturnAsserts(name string)[]string{
 	var asserts = make(map[string][]string)

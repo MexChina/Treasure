@@ -1,7 +1,6 @@
 package view
 
 import (
-	"github.com/MexChina/Treasure/template/adminlte"
 	"github.com/MexChina/Treasure/application/admin/view/types"
 	"html/template"
 	"sync"
@@ -38,7 +37,7 @@ type Template interface {
 }
 
 var templateMap = map[string]Template{
-	"adminlte": adminlte.GetAdminlte(),
+	"adminlte": GetAdminlte(),
 }
 
 func Get(theme string) Template {
