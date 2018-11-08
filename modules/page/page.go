@@ -27,7 +27,7 @@ func SetPageContent(ctx *context.Context, c func() types.Panel) {
 		User: user,
 		Menu: menu.GetGlobalMenu(user),
 		System: types.SystemInfo{
-			"0.0.1",
+			globalConfig.VERSION,
 		},
 		Panel:         panel,
 		AssertRootUrl: "/" + globalConfig.PREFIX,

@@ -85,7 +85,7 @@ func GlobalDeferHandler(ctx *context.Context) {
 				User: user,
 				Menu: menu.GetGlobalMenu(user),
 				System: types.SystemInfo{
-					"0.0.1",
+					Config.VERSION,
 				},
 				Panel: types.Panel{
 					Content: alert + template.Get(Config.THEME).Form().
@@ -145,7 +145,7 @@ func GlobalDeferHandler(ctx *context.Context) {
 				User: user,
 				Menu: menu.GetGlobalMenu(user),
 				System: types.SystemInfo{
-					"0.0.1",
+					Config.VERSION,
 				},
 				Panel: types.Panel{
 					Content: alert + template.Get(Config.THEME).Form().

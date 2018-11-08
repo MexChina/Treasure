@@ -2,7 +2,6 @@ package controller
 
 import (
 	"bytes"
-	"fmt"
 	"github.com/MexChina/Treasure/context"
 	"github.com/MexChina/Treasure/modules/auth"
 	"github.com/MexChina/Treasure/modules/menu"
@@ -12,6 +11,10 @@ import (
 	"net/http"
 	"path"
 	"strings"
+	"github.com/MexChina/Treasure/modules/logger"
+	"os"
+	"io/ioutil"
+	"path/filepath"
 )
 
 // 显示列表
@@ -75,7 +78,7 @@ func ShowInfo(ctx *context.Context) {
 		User: user,
 		Menu: menu.GetGlobalMenu(user),
 		System: types.SystemInfo{
-			"0.0.1",
+			Config.VERSION,
 		},
 		Panel: types.Panel{
 			Content:     box,
@@ -91,9 +94,16 @@ func ShowInfo(ctx *context.Context) {
 }
 
 func Assert(ctx *context.Context) {
-	filepath := "template/adminlte/resource" + strings.Replace(ctx.Request.URL.Path, Config.PREFIX, "", 1)
-	data, err := template.Get("adminlte").GetAsset(filepath)
-	fileSuffix := path.Ext(filepath)
+	filepathstr := Config.ASSETS + strings.Replace(ctx.Request.URL.Path, Config.PREFIX, "", 1)
+	pathsss, _ := filepath.Abs(filepathstr);
+	fin, err := os.Open(pathsss)
+	defer fin.Close()
+	if err != nil {
+		logger.Error("static resource:", err)
+	}
+	data, err := ioutil.ReadAll(fin)
+
+	fileSuffix := path.Ext(filepathstr)
 	fileSuffix = strings.Replace(fileSuffix, ".", "", -1)
 
 	var contentType = ""
@@ -104,7 +114,7 @@ func Assert(ctx *context.Context) {
 	}
 
 	if err != nil {
-		fmt.Println("asset err", err)
+		logger.Error("asset err", err)
 		ctx.Write(http.StatusNotFound, map[string]string{}, "")
 	} else {
 		ctx.Write(http.StatusOK, map[string]string{

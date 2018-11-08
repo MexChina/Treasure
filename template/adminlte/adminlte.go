@@ -1,14 +1,15 @@
 package adminlte
 
 import (
-	"fmt"
 	"github.com/MexChina/Treasure/modules/language"
 	"github.com/MexChina/Treasure/modules/menu"
+	"github.com/MexChina/Treasure/modules/config"
 	"github.com/MexChina/Treasure/template/adminlte/components"
-	"github.com/MexChina/Treasure/template/adminlte/resource"
 	"github.com/MexChina/Treasure/template/adminlte/tmpl"
 	"github.com/MexChina/Treasure/template/types"
 	"html/template"
+	"github.com/MexChina/Treasure/modules/logger"
+	"path/filepath"
 )
 
 type Theme struct {
@@ -33,6 +34,7 @@ func (*Theme) GetTemplate(isPjax bool) (tmpler *template.Template, name string) 
 	)
 
 	if !isPjax {
+
 		name = "layout"
 		tmpler, err = template.New("layout").Funcs(template.FuncMap{
 			"lang":     language.Get,
@@ -41,6 +43,7 @@ func (*Theme) GetTemplate(isPjax bool) (tmpler *template.Template, name string) 
 			tmpl.List["head"] + tmpl.List["header"] + tmpl.List["sidebar"] +
 			tmpl.List["footer"] + tmpl.List["js"] + tmpl.List["menu"] +
 			tmpl.List["admin_panel"] + tmpl.List["content"])
+
 	} else {
 		name = "content"
 		tmpler, err = template.New("content").Funcs(template.FuncMap{
@@ -50,18 +53,24 @@ func (*Theme) GetTemplate(isPjax bool) (tmpler *template.Template, name string) 
 	}
 
 	if err != nil {
-		fmt.Println(err)
+		logger.Error(err)
 	}
 
 	return
 }
 
-func (*Theme) GetAsset(path string) ([]byte, error) {
-	return resource.Asset(path)
+func (*Theme) GetHtml(name string) (tmpler *template.Template) {
+	cfg := config.Get()
+	pathsss, _ := filepath.Abs(cfg.ASSETS+"/pages/"+name+".html");
+	tmpler,err := template.ParseFiles(pathsss)
+	if err != nil{
+		logger.Error(err)
+	}
+	return
 }
 
-func (*Theme) GetAssetList() []string {
-	return asserts
+func (*Theme) GetAssetList(name string) []string {
+	return ReturnAsserts(name)
 }
 
 func (*Theme) Box() types.BoxAttribute {

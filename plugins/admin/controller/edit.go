@@ -47,7 +47,7 @@ func ShowForm(ctx *context.Context) {
 		User: user,
 		Menu: menu.GetGlobalMenu(user),
 		System: types.SystemInfo{
-			"0.0.1",
+			Config.VERSION,
 		},
 		Panel: types.Panel{
 			Content: template.Get(Config.THEME).Form().
@@ -152,7 +152,7 @@ func EditForm(ctx *context.Context) {
 		User: user,
 		Menu: menu.GetGlobalMenu(user),
 		System: types.SystemInfo{
-			"0.0.1",
+			Config.VERSION,
 		},
 		Panel: types.Panel{
 			Content:     box,

@@ -75,6 +75,11 @@ type Config struct {
 
 	//Logger
 	LOGGER logger.LogConfig
+
+	//version
+	VERSION string
+
+	ASSETS string
 }
 
 var (
@@ -88,13 +93,13 @@ func Set(cfg Config) {
 	globalCfg = cfg
 
 	if globalCfg.TITLE == "" {
-		globalCfg.TITLE = "GoAdmin"
+		globalCfg.TITLE = "Treasure"
 	}
 	if globalCfg.LOGO == "" {
-		globalCfg.LOGO = "<b>Go</b>Admin"
+		globalCfg.LOGO = "<b>T</b>reasure"
 	}
 	if globalCfg.MINILOGO == "" {
-		globalCfg.MINILOGO = "<b>G</b>A"
+		globalCfg.MINILOGO = "<b>T</b>S"
 	}
 	if globalCfg.THEME == "" {
 		globalCfg.THEME = "adminlte"

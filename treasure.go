@@ -39,10 +39,11 @@ func main() {
 				Colorful:true,
 			},
 		},
+		VERSION:"0.0.1",
+		ASSETS:"src/github.com/MexChina/Treasure/template/adminlte/resource",
 	}
 	router := fasthttprouter.New()
 	eng := engine.Default()
-
 	if err := eng.AddConfig(cfg).AddPlugins(admin.NewAdmin()).AddLogger(cfg.LOGGER).Use(router); err != nil {
 		logger.Painc(err)
 	}

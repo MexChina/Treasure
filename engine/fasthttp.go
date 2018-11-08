@@ -187,7 +187,7 @@ func (fast *Fasthttp) Content(contextInterface interface{}, c types.GetPanel) {
 		User: user,
 		Menu: menu.GetGlobalMenu(user),
 		System: types.SystemInfo{
-			"0.0.1",
+			globalConfig.VERSION,
 		},
 		Panel:         panel,
 		AssertRootUrl: "/" + globalConfig.PREFIX,

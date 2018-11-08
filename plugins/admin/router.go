@@ -9,21 +9,18 @@ import (
 
 func InitRouter(prefix string) *context.App {
 	app := context.NewApp()
-
 	app.Group(prefix)
 	{
 		// auth
 		app.GET("/login", controller.ShowLogin)
 		app.POST("/signin", controller.Auth)
-
-		for _, path := range template.Get("adminlte").GetAssetList() {
+		for _, path := range template.Get("adminlte").GetAssetList("adminlte") {
 			app.GET("/assets"+path, controller.Assert)
 		}
 
-		for _, path := range template.GetComp("login").GetAssetList() {
+		for _, path := range template.Get("adminlte").GetAssetList("login") {
 			app.GET("/assets"+path, controller.Assert)
 		}
-
 		authenticator := auth.SetPrefix(prefix).SetAuthFailCallback(func(ctx *context.Context) {
 			ctx.Write(302, map[string]string{
 				"Location": prefix + "/login",
@@ -57,6 +54,5 @@ func InitRouter(prefix string) *context.App {
 			app.POST("/new/:prefix", controller.NewForm)
 		}
 	}
-
 	return app
 }

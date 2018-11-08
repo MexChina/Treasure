@@ -15,7 +15,7 @@ func RecordOperationLog(ctx *context.Context) {
 			input, _ = json.Marshal((*form).Value)
 		}
 
-		orm.GetConnection().Exec("insert into goadmin_operation_log (user_id, path, method, ip, input) values (?, ?, ?, ?, ?)", user.ID, ctx.Path(),
+		orm.GetConnection().Exec("insert into operation_log (user_id, path, method, ip, input) values (?, ?, ?, ?, ?)", user.ID, ctx.Path(),
 			ctx.Method(), ctx.LocalIP(), string(input))
 	}
 }

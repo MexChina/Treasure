@@ -1,7 +1,6 @@
 package models
 
 import (
-	"fmt"
 	"github.com/MexChina/Treasure/plugins/admin/modules"
 	"github.com/MexChina/Treasure/template/types"
 	"html/template"
@@ -274,7 +273,6 @@ func GetNewFormList(old []types.FormStruct) []types.FormStruct {
 			newForm = append(newForm, v)
 		}
 	}
-	fmt.Println("form", newForm)
 	return newForm
 }
 

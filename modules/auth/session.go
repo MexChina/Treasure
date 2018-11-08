@@ -102,7 +102,7 @@ func InitSession(ctx *context.Context) *Session {
 type MysqlDriver struct{}
 
 func (driver *MysqlDriver) Load(sid string) map[string]interface{} {
-	sesModel, _ := orm.GetConnection().Query("select * from goadmin_session where sid = ?", sid)
+	sesModel, _ := orm.GetConnection().Query("select * from session where sid = ?", sid)
 	if len(sesModel) < 1 {
 		return map[string]interface{}{}
 	} else {
@@ -115,15 +115,15 @@ func (driver *MysqlDriver) Load(sid string) map[string]interface{} {
 func (driver *MysqlDriver) Update(sid string, values map[string]interface{}) {
 	if sid != "" {
 		if len(values) == 0 {
-			orm.GetConnection().Exec("delete from goadmin_session where sid = ?", sid)
+			orm.GetConnection().Exec("delete from session where sid = ?", sid)
 			return
 		}
 		valuesByte, _ := json.Marshal(values)
-		sesModel, _ := orm.GetConnection().Query("select * from goadmin_session where sid = ?", sid)
+		sesModel, _ := orm.GetConnection().Query("select * from session where sid = ?", sid)
 		if len(sesModel) < 1 {
-			orm.GetConnection().Exec("insert into goadmin_session (`values`, sid) values (?, ?)", string(valuesByte), sid)
+			orm.GetConnection().Exec("insert into session (`values`, sid) values (?, ?)", string(valuesByte), sid)
 		} else {
-			orm.GetConnection().Exec("update goadmin_session set `values` = ? where sid = ?", string(valuesByte), sid)
+			orm.GetConnection().Exec("update session set `values` = ? where sid = ?", string(valuesByte), sid)
 		}
 	}
 }

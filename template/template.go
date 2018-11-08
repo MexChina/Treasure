@@ -6,7 +6,6 @@ package template
 
 import (
 	"github.com/MexChina/Treasure/template/adminlte"
-	"github.com/MexChina/Treasure/template/login"
 	"github.com/MexChina/Treasure/template/types"
 	"html/template"
 	"sync"
@@ -41,8 +40,7 @@ type Template interface {
 
 	// Builder methods
 	GetTmplList() map[string]string
-	GetAssetList() []string
-	GetAsset(string) ([]byte, error)
+	GetAssetList(string) []string
 	GetTemplate(bool) (*template.Template, string)
 }
 
@@ -62,7 +60,6 @@ func Get(theme string) Template {
 
 var (
 	templateMu sync.Mutex
-	compMu     sync.Mutex
 )
 
 // Add makes a template available by the provided theme name.
@@ -78,39 +75,4 @@ func Add(name string, temp Template) {
 		panic("add template twice " + name)
 	}
 	templateMap[name] = temp
-}
-
-// Component is the interface which stand for a ui component.
-type Component interface {
-	GetTemplate() (*template.Template, string)
-	GetAssetList() []string
-	GetAsset(string) ([]byte, error)
-}
-
-var CompMap = map[string]Component{
-	"login": login.GetLoginComponent(),
-}
-
-// GetComp gets the component by registered name. If the
-// name is not found, it panics.
-func GetComp(name string) Component {
-	if comp, ok := CompMap[name]; ok {
-		return comp
-	}
-	panic("wrong component name")
-}
-
-// AddComp makes a component available by the provided name.
-// If Add is called twice with the same name or if component is nil,
-// it panics.
-func AddComp(name string, comp Component) {
-	compMu.Lock()
-	defer compMu.Unlock()
-	if comp == nil {
-		panic("component is nil")
-	}
-	if _, dup := CompMap[name]; dup {
-		panic("add component twice " + name)
-	}
-	CompMap[name] = comp
 }
