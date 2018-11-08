@@ -8,7 +8,7 @@ import (
 	"github.com/MexChina/Treasure/application/admin/models"
 	"github.com/MexChina/Treasure/modules/uploader"
 	"github.com/MexChina/Treasure/template"
-	"github.com/MexChina/Treasure/template/types"
+	"github.com/MexChina/Treasure/application/admin/view/types"
 	"net/http"
 	"strings"
 )

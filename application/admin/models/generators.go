@@ -4,7 +4,7 @@ import (
 	"github.com/MexChina/Treasure/modules/config"
 	"github.com/MexChina/Treasure/modules/language"
 	"github.com/MexChina/Treasure/template"
-	"github.com/MexChina/Treasure/template/types"
+	"github.com/MexChina/Treasure/application/admin/view/types"
 	"strconv"
 	"strings"
 	"github.com/MexChina/Treasure/modules/orm"

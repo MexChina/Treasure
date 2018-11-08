@@ -6,7 +6,7 @@ package template
 
 import (
 	"github.com/MexChina/Treasure/template/adminlte"
-	"github.com/MexChina/Treasure/template/types"
+	"github.com/MexChina/Treasure/application/admin/view/types"
 	"html/template"
 	"sync"
 )

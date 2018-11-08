@@ -7,7 +7,7 @@ import (
 	"github.com/MexChina/Treasure/modules/config"
 	"github.com/MexChina/Treasure/modules/menu"
 	"github.com/MexChina/Treasure/template"
-	"github.com/MexChina/Treasure/template/types"
+	"github.com/MexChina/Treasure/application/admin/view/types"
 )
 
 // SetPageContent set and return the panel of page content.

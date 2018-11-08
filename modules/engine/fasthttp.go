@@ -10,7 +10,7 @@ import (
 	"net/http"
 	"net/url"
 	"strings"
-	"github.com/MexChina/Treasure/template/types"
+	"github.com/MexChina/Treasure/application/admin/view/types"
 	"github.com/MexChina/Treasure/modules/config"
 	"github.com/MexChina/Treasure/modules/auth"
 	"github.com/MexChina/Treasure/template"

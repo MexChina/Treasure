@@ -3,7 +3,7 @@ package models
 import (
 	template2 "github.com/MexChina/Treasure/template"
 	"github.com/MexChina/Treasure/template/adminlte/components"
-	"github.com/MexChina/Treasure/template/types"
+	"github.com/MexChina/Treasure/application/admin/view/types"
 	"html/template"
 	"math"
 	"strconv"
