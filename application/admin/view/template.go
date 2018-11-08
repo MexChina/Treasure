@@ -31,7 +31,7 @@ type Template interface {
 	ChartLegend() types.ChartLegendAttribute
 	Tabs() types.TabsAttribute
 
-	GetTmplList() map[string]string
+	//GetTmplList() map[string]string
 	GetAssetList(string) []string
 	GetTemplate(bool) (*template.Template, string)
 }

@@ -4,11 +4,13 @@ import (
 	"github.com/MexChina/Treasure/modules/language"
 	"github.com/MexChina/Treasure/modules/menu"
 	"github.com/MexChina/Treasure/modules/config"
+	"github.com/MexChina/Treasure/modules/logger"
 	"github.com/MexChina/Treasure/application/admin/view/components"
 	"github.com/MexChina/Treasure/application/admin/view/types"
 	"html/template"
-	"github.com/MexChina/Treasure/modules/logger"
 	"path/filepath"
+	"os"
+	"io/ioutil"
 )
 
 type Theme struct {
@@ -23,32 +25,23 @@ func GetAdminlte() *Theme {
 	return &Adminlte
 }
 
-func (*Theme) GetTmplList() map[string]string {
-	return components.List
-}
-
 func (*Theme) GetTemplate(isPjax bool) (tmpler *template.Template, name string) {
 	var (
 		err error
 	)
 
 	if !isPjax {
-
 		name = "layout"
 		tmpler, err = template.New("layout").Funcs(template.FuncMap{
 			"lang":     language.Get,
 			"langHtml": language.GetFromHtml,
-		}).Parse(components.List["layout"] +
-			components.List["head"] + components.List["header"] + components.List["sidebar"] +
-			components.List["footer"] + components.List["js"] + components.List["menu"] +
-			components.List["admin_panel"] + components.List["content"])
-
+		}).Parse(GetHtmlStr("layout") + GetHtmlStr("head") + GetHtmlStr("header") + GetHtmlStr("sidebar") + GetHtmlStr("footer") + GetHtmlStr("js") + GetHtmlStr("menu") + GetHtmlStr("admin_panel") + GetHtmlStr("content"))
 	} else {
 		name = "content"
 		tmpler, err = template.New("content").Funcs(template.FuncMap{
 			"lang":     language.Get,
 			"langHtml": language.GetFromHtml,
-		}).Parse(components.List["admin_panel"] + components.List["content"])
+		}).Parse(GetHtmlStr("admin_panel") + GetHtmlStr("content"))
 	}
 
 	if err != nil {
@@ -68,8 +61,25 @@ func (*Theme) GetHtml(name string) (tmpler *template.Template) {
 	return
 }
 
+func GetHtmlStr(name string) string {
+	cfg := config.Get()
+	pathsss, _ := filepath.Abs(cfg.ASSETS+"/application/admin/view/html/"+name+".html");
+	fin, err := os.Open(pathsss)
+	defer fin.Close()
+	if err != nil {
+		logger.Error("static resource:", err)
+		return ""
+	}
+	data, err := ioutil.ReadAll(fin)
+	if err != nil{
+		logger.Error(err)
+		return ""
+	}
+	return string(data)
+}
+
 func (*Theme) GetAssetList(name string) []string {
-	return ReturnAsserts(name)
+	return asserts[name]
 }
 
 func (*Theme) Box() types.BoxAttribute {

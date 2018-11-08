@@ -1,8 +1,7 @@
 package view
 
-func ReturnAsserts(name string)[]string{
-	var asserts = make(map[string][]string)
-	asserts["adminlte"] = []string{
+var asserts = map[string][]string{
+	"adminlte":{
 		"/Ionicons/css/ionicons.css",
 		"/Ionicons/css/ionicons.min.css",
 		"/Ionicons/fonts/ionicons.eot",
@@ -306,9 +305,8 @@ func ReturnAsserts(name string)[]string{
 		"/toastr/build/toastr.min.css",
 		"/toastr/build/toastr.min.js",
 		"/chartjs/chart.js",
-	}
-
-	asserts["login"] = []string{
+	},
+	"login":{
 		"/login/css/animate.css",
 		"/login/css/bootstrap.min.css",
 		"/login/css/style.css",
@@ -320,11 +318,5 @@ func ReturnAsserts(name string)[]string{
 		"/login/js/jquery.waypoints.min.js",
 		"/login/js/main.js",
 		"/login/js/modernizr-2.6.2.min.js",
-	}
-	if _,ok := asserts[name];ok{
-		return asserts[name]
-	}
-	return []string{}
+	},
 }
-
-
