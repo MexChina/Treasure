@@ -26,7 +26,7 @@ func init()  {
 	Register(new(Fasthttp))
 }
 
-func (fast *Fasthttp) Use(router interface{}, plugin []application.Plugin) error {
+func (fast *Fasthttp) Use(router interface{}, apps []application.Application) error {
 	var (
 		eng *fasthttprouter.Router
 		ok     bool
@@ -35,10 +35,10 @@ func (fast *Fasthttp) Use(router interface{}, plugin []application.Plugin) error
 		return errors.New("wrong parameter")
 	}
 
-	for _, plug := range plugin {
-		var plugCopy application.Plugin
-		plugCopy = plug
-		for _, req := range plug.GetRequest() {
+	for _, app := range apps {
+		var plugCopy application.Application
+		plugCopy = app
+		for _, req := range app.GetRequest() {
 			eng.Handle(strings.ToUpper(req.Method), req.URL, func(c *fasthttp.RequestCtx) {
 				httpreq := Convertor(c)
 				ctx := context.NewContext(httpreq)

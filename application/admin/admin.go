@@ -14,7 +14,7 @@ type Admin struct {
 	tableCfg map[string]models.TableGenerator
 }
 
-func (admin *Admin) InitPlugin() {
+func (admin *Admin) InitApplication() {
 
 	cfg := config.Get()
 

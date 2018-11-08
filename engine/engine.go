@@ -17,7 +17,7 @@ import (
 // plugin is that the adapter use the plugin which contains routers and
 // controller methods to inject into the framework entity and make it work.
 type Engine struct {
-	PluginList []application.Plugin
+	ApplicationList []application.Application
 	Adapter    WebFrameWork
 }
 
@@ -33,7 +33,7 @@ func (eng *Engine) Use(router interface{}) error {
 	if eng.Adapter == nil {
 		panic("adapter is nil, import the default adapter or use AddAdapter method add the adapter")
 	}
-	return eng.Adapter.Use(router, eng.PluginList)
+	return eng.Adapter.Use(router, eng.ApplicationList)
 }
 
 //addLogger set the global logger
@@ -43,13 +43,11 @@ func (eng *Engine) AddLogger(cfg logger.LogConfig) *Engine{
 }
 
 // AddPlugins add the plugins and initialize them.
-func (eng *Engine) AddPlugins(plugs ...application.Plugin) *Engine {
-
-	for _, plug := range plugs {
-		plug.InitPlugin()
+func (eng *Engine) AddApplication(apps ...application.Application) *Engine {
+	for _, app := range apps {
+		app.InitApplication()
 	}
-
-	eng.PluginList = append(eng.PluginList, plugs...)
+	eng.ApplicationList = append(eng.ApplicationList, apps...)
 	return eng
 }
 

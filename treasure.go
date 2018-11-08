@@ -44,7 +44,7 @@ func main() {
 	}
 	router := fasthttprouter.New()
 	eng := engine.Default()
-	if err := eng.AddConfig(cfg).AddPlugins(admin.NewAdmin()).AddLogger(cfg.LOGGER).Use(router); err != nil {
+	if err := eng.AddConfig(cfg).AddApplication(admin.NewAdmin()).AddLogger(cfg.LOGGER).Use(router); err != nil {
 		logger.Painc(err)
 	}
 	logger.Fatal(fasthttp.ListenAndServe(":8897", router.Handler))

@@ -6,6 +6,6 @@ import (
 )
 
 type WebFrameWork interface {
-	Use(interface{}, []application.Plugin) error
+	Use(interface{}, []application.Application) error
 	Content(interface{}, types.GetPanel)
 }
