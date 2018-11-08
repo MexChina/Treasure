@@ -3,7 +3,7 @@ package admin
 import (
 	"github.com/MexChina/Treasure/modules/context"
 	"github.com/MexChina/Treasure/modules/config"
-	"github.com/MexChina/Treasure/application"
+	"github.com/MexChina/Treasure/modules/engine"
 	"github.com/MexChina/Treasure/application/admin/controller"
 	"github.com/MexChina/Treasure/application/admin/models"
 	"github.com/MexChina/Treasure/modules/orm"
@@ -56,5 +56,5 @@ func (admin *Admin) GetRequest() []context.Path {
 }
 
 func (admin *Admin) GetHandler(url, method string) context.Handler {
-	return application.GetHandler(url, method, admin.app)
+	return engine.GetHandler(url, method, admin.app)
 }

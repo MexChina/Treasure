@@ -16,7 +16,6 @@ import (
 	"github.com/MexChina/Treasure/template"
 	template2 "html/template"
 	"github.com/MexChina/Treasure/modules/menu"
-	"github.com/MexChina/Treasure/application"
 )
 
 type Fasthttp struct {
@@ -26,7 +25,7 @@ func init()  {
 	Register(new(Fasthttp))
 }
 
-func (fast *Fasthttp) Use(router interface{}, apps []application.Application) error {
+func (fast *Fasthttp) Use(router interface{}, apps []Application) error {
 	var (
 		eng *fasthttprouter.Router
 		ok     bool
@@ -36,7 +35,7 @@ func (fast *Fasthttp) Use(router interface{}, apps []application.Application) er
 	}
 
 	for _, app := range apps {
-		var plugCopy application.Application
+		var plugCopy Application
 		plugCopy = app
 		for _, req := range app.GetRequest() {
 			eng.Handle(strings.ToUpper(req.Method), req.URL, func(c *fasthttp.RequestCtx) {
