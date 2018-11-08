@@ -6,9 +6,9 @@ package engine
 
 import (
 	"github.com/MexChina/Treasure/modules/config"
-	"github.com/MexChina/Treasure/plugins"
 	"github.com/MexChina/Treasure/template/types"
 	"github.com/MexChina/Treasure/modules/logger"
+	"github.com/MexChina/Treasure/application"
 )
 
 // Engine is the core components of goAdmin. It has two attributes.
@@ -17,7 +17,7 @@ import (
 // plugin is that the adapter use the plugin which contains routers and
 // controller methods to inject into the framework entity and make it work.
 type Engine struct {
-	PluginList []plugins.Plugin
+	PluginList []application.Plugin
 	Adapter    WebFrameWork
 }
 
@@ -43,7 +43,7 @@ func (eng *Engine) AddLogger(cfg logger.LogConfig) *Engine{
 }
 
 // AddPlugins add the plugins and initialize them.
-func (eng *Engine) AddPlugins(plugs ...plugins.Plugin) *Engine {
+func (eng *Engine) AddPlugins(plugs ...application.Plugin) *Engine {
 
 	for _, plug := range plugs {
 		plug.InitPlugin()

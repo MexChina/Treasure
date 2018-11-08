@@ -3,7 +3,7 @@ package auth
 import (
 	"github.com/MexChina/Treasure/context"
 	"github.com/MexChina/Treasure/modules/config"
-	"github.com/MexChina/Treasure/plugins/admin/modules"
+	"github.com/MexChina/Treasure/application/admin/modules"
 	"golang.org/x/crypto/bcrypt"
 	"strconv"
 	"strings"

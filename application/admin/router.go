@@ -3,7 +3,7 @@ package admin
 import (
 	"github.com/MexChina/Treasure/context"
 	"github.com/MexChina/Treasure/modules/auth"
-	"github.com/MexChina/Treasure/plugins/admin/controller"
+	"github.com/MexChina/Treasure/application/admin/controller"
 	"github.com/MexChina/Treasure/template"
 )
 

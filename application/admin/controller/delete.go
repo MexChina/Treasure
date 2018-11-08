@@ -3,7 +3,7 @@ package controller
 import (
 	"github.com/MexChina/Treasure/context"
 	"github.com/MexChina/Treasure/modules/auth"
-	"github.com/MexChina/Treasure/plugins/admin/models"
+	"github.com/MexChina/Treasure/application/admin/models"
 )
 
 func DeleteData(ctx *context.Context) {

@@ -1,7 +1,7 @@
 package file
 
 import (
-	"github.com/MexChina/Treasure/plugins/admin/modules"
+	"github.com/MexChina/Treasure/application/admin/modules"
 	"io"
 	"mime/multipart"
 	"os"

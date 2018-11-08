@@ -5,7 +5,7 @@ import (
 	"github.com/MexChina/Treasure/context"
 	"github.com/MexChina/Treasure/modules/auth"
 	"github.com/MexChina/Treasure/modules/menu"
-	"github.com/MexChina/Treasure/plugins/admin/models"
+	"github.com/MexChina/Treasure/application/admin/models"
 	"github.com/MexChina/Treasure/template"
 	"github.com/MexChina/Treasure/template/types"
 	"net/http"

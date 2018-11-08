@@ -1,7 +1,7 @@
 package models
 
 import (
-	"github.com/MexChina/Treasure/plugins/admin/modules"
+	"github.com/MexChina/Treasure/application/admin/modules"
 	"github.com/MexChina/Treasure/template/types"
 	"html/template"
 	"strconv"

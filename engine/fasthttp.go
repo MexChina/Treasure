@@ -6,7 +6,6 @@ import (
 	"github.com/buaazp/fasthttprouter"
 	"github.com/valyala/fasthttp"
 	"github.com/MexChina/Treasure/context"
-	"github.com/MexChina/Treasure/plugins"
 	"io"
 	"net/http"
 	"net/url"
@@ -17,6 +16,7 @@ import (
 	"github.com/MexChina/Treasure/template"
 	template2 "html/template"
 	"github.com/MexChina/Treasure/modules/menu"
+	"github.com/MexChina/Treasure/application"
 )
 
 type Fasthttp struct {
@@ -26,7 +26,7 @@ func init()  {
 	Register(new(Fasthttp))
 }
 
-func (fast *Fasthttp) Use(router interface{}, plugin []plugins.Plugin) error {
+func (fast *Fasthttp) Use(router interface{}, plugin []application.Plugin) error {
 	var (
 		eng *fasthttprouter.Router
 		ok     bool
@@ -36,7 +36,7 @@ func (fast *Fasthttp) Use(router interface{}, plugin []plugins.Plugin) error {
 	}
 
 	for _, plug := range plugin {
-		var plugCopy plugins.Plugin
+		var plugCopy application.Plugin
 		plugCopy = plug
 		for _, req := range plug.GetRequest() {
 			eng.Handle(strings.ToUpper(req.Method), req.URL, func(c *fasthttp.RequestCtx) {
