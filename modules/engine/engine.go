@@ -1,7 +1,3 @@
-// Copyright 2018 ChenHonggui.  All rights reserved.
-// Use of this source code is governed by a MIT style
-// license that can be found in the LICENSE file.
-
 package engine
 
 import (
@@ -10,11 +6,6 @@ import (
 	"github.com/MexChina/Treasure/modules/logger"
 )
 
-// Engine is the core components of goAdmin. It has two attributes.
-// PluginList is an array of plugin. Adapter is the adapter of
-// web framework context and goAdmin context. The relationship of adapter and
-// plugin is that the adapter use the plugin which contains routers and
-// controller methods to inject into the framework entity and make it work.
 type Engine struct {
 	ApplicationList []Application
 	Adapter    WebFrameWork
@@ -30,7 +21,7 @@ func Default() *Engine {
 // Use enable the adapter.
 func (eng *Engine) Use(router interface{}) error {
 	if eng.Adapter == nil {
-		panic("adapter is nil, import the default adapter or use AddAdapter method add the adapter")
+		logger.Painc("adapter is nil, import the default adapter or use AddAdapter method add the adapter")
 	}
 	return eng.Adapter.Use(router, eng.ApplicationList)
 }

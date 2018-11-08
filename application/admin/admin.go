@@ -3,10 +3,10 @@ package admin
 import (
 	"github.com/MexChina/Treasure/modules/context"
 	"github.com/MexChina/Treasure/modules/config"
+	"github.com/MexChina/Treasure/modules/orm"
 	"github.com/MexChina/Treasure/modules/engine"
 	"github.com/MexChina/Treasure/application/admin/controller"
 	"github.com/MexChina/Treasure/application/admin/models"
-	"github.com/MexChina/Treasure/modules/orm"
 )
 
 type Admin struct {
@@ -15,9 +15,7 @@ type Admin struct {
 }
 
 func (admin *Admin) InitApplication() {
-
 	cfg := config.Get()
-
 	// Init database
 	for _, databaseCfg := range cfg.DATABASE {
 		orm.GetConnectionByDriver(databaseCfg.DRIVER).InitDB(map[string]config.Database{
@@ -27,7 +25,6 @@ func (admin *Admin) InitApplication() {
 
 	// Init router
 	App.app = InitRouter("/" + cfg.PREFIX)
-
 	models.SetGenerators(map[string]models.TableGenerator{
 		"manager":    models.GetManagerTable,
 		"permission": models.GetPermissionTable,
@@ -37,17 +34,11 @@ func (admin *Admin) InitApplication() {
 	})
 	models.SetGenerators(admin.tableCfg)
 	models.InitTableList()
-
 	cfg.PREFIX = "/" + cfg.PREFIX
 	controller.SetConfig(cfg)
-
 }
-
 var App = new(Admin)
-
-//func NewAdmin(tableCfg map[string]models.TableGenerator) *Admin {
 func NewAdmin() *Admin {
-	//App.tableCfg = tableCfg
 	return App
 }
 
