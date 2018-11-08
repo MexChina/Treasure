@@ -7,9 +7,9 @@ import (
 	"github.com/MexChina/Treasure/modules/auth"
 	"github.com/MexChina/Treasure/modules/menu"
 	"github.com/MexChina/Treasure/application/admin/models"
-	"github.com/MexChina/Treasure/template"
+	"github.com/MexChina/Treasure/application/admin/view"
 	"github.com/MexChina/Treasure/application/admin/view/types"
-	template2 "html/template"
+	"html/template"
 	"net/http"
 	"github.com/MexChina/Treasure/modules/orm"
 )
@@ -26,7 +26,7 @@ func ShowEditMenu(ctx *context.Context) {
 	id := ctx.Request.URL.Query().Get("id")
 	formData, title, description := models.TableList["menu"].GetDataFromDatabaseWithId("menu", id)
 
-	tmpl, tmplName := template.Get("adminlte").GetTemplate(ctx.Request.Header.Get("X-PJAX") == "true")
+	tmpl, tmplName := view.Get("adminlte").GetTemplate(ctx.Request.Header.Get("X-PJAX") == "true")
 
 	path := ctx.Path()
 	menu.GlobalMenu.SetActiveClass(path)
@@ -46,13 +46,13 @@ $('.icon').iconpicker({placement: 'bottomLeft'});
 			Config.VERSION,
 		},
 		Panel: types.Panel{
-			Content: template.Get(Config.THEME).Form().
+			Content: view.Get(Config.THEME).Form().
 				SetContent(formData).
 				SetPrefix(Config.PREFIX).
 				SetUrl(Config.PREFIX+"/menu/edit").
 				SetToken(auth.TokenHelper.AddToken()).
 				SetInfoUrl(Config.PREFIX+"/menu").
-				GetContent() + template2.HTML(js),
+				GetContent() + template.HTML(js),
 			Description: description,
 			Title:       title,
 		},
@@ -186,20 +186,20 @@ func GetMenuInfoPanel(ctx *context.Context) {
 	deleteUrl := Config.PREFIX + "/menu/delete"
 	orderUrl := Config.PREFIX + "/menu/order"
 
-	tree := template.Get(Config.THEME).Tree().SetTree((menu.GetGlobalMenu(user)).GlobalMenuList).
+	tree := view.Get(Config.THEME).Tree().SetTree((menu.GetGlobalMenu(user)).GlobalMenuList).
 		SetEditUrl(editUrl).SetDeleteUrl(deleteUrl).SetOrderUrl(orderUrl).GetContent()
-	header := template.Get(Config.THEME).Tree().GetTreeHeader()
-	box := template.Get(Config.THEME).Box().SetHeader(header).SetBody(tree).GetContent()
-	col1 := template.Get(Config.THEME).Col().SetSize(map[string]string{"md": "6"}).SetContent(box).GetContent()
+	header := view.Get(Config.THEME).Tree().GetTreeHeader()
+	box := view.Get(Config.THEME).Box().SetHeader(header).SetBody(tree).GetContent()
+	col1 := view.Get(Config.THEME).Col().SetSize(map[string]string{"md": "6"}).SetContent(box).GetContent()
 
-	newForm := template.Get(Config.THEME).Form().SetPrefix(Config.PREFIX).SetUrl(Config.PREFIX + "/menu/new").
+	newForm := view.Get(Config.THEME).Form().SetPrefix(Config.PREFIX).SetUrl(Config.PREFIX + "/menu/new").
 		SetInfoUrl(Config.PREFIX + "/menu").SetTitle("New").
 		SetContent(models.GetNewFormList(models.TableList["menu"].Form.FormList)).GetContent()
-	col2 := template.Get(Config.THEME).Col().SetSize(map[string]string{"md": "6"}).SetContent(newForm).GetContent()
+	col2 := view.Get(Config.THEME).Col().SetSize(map[string]string{"md": "6"}).SetContent(newForm).GetContent()
 
-	row := template.Get(Config.THEME).Row().SetContent(col1 + col2).GetContent()
+	row := view.Get(Config.THEME).Row().SetContent(col1 + col2).GetContent()
 
-	tmpl, tmplName := template.Get("adminlte").GetTemplate(ctx.Request.Header.Get("X-PJAX") == "true")
+	tmpl, tmplName := view.Get("adminlte").GetTemplate(ctx.Request.Header.Get("X-PJAX") == "true")
 
 	menu.GlobalMenu.SetActiveClass(path)
 

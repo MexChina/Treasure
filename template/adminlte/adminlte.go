@@ -4,7 +4,7 @@ import (
 	"github.com/MexChina/Treasure/modules/language"
 	"github.com/MexChina/Treasure/modules/menu"
 	"github.com/MexChina/Treasure/modules/config"
-	"github.com/MexChina/Treasure/template/adminlte/components"
+	"github.com/MexChina/Treasure/application/admin/view/components"
 	"github.com/MexChina/Treasure/template/adminlte/tmpl"
 	"github.com/MexChina/Treasure/application/admin/view/types"
 	"html/template"

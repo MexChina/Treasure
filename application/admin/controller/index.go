@@ -3,7 +3,7 @@ package controller
 import (
 	"github.com/MexChina/Treasure/modules/context"
 	"github.com/MexChina/Treasure/modules/page"
-	template2 "github.com/MexChina/Treasure/template"
+	"github.com/MexChina/Treasure/application/admin/view"
 	"github.com/MexChina/Treasure/application/admin/view/types"
 	"html/template"
 )
@@ -11,7 +11,7 @@ import (
 func ShowDashboard(ctx *context.Context) {
 	page.SetPageContent(ctx, func() types.Panel {
 
-		components := template2.Get(Config.THEME)
+		components := view.Get(Config.THEME)
 		colComp := components.Col()
 
 		/**************************
@@ -274,7 +274,7 @@ func ShowDashboard(ctx *context.Context) {
 
 func ShowErrorPage(ctx *context.Context, errorMsg string) {
 	page.SetPageContent(ctx, func() types.Panel {
-		alert := template2.Get(Config.THEME).Alert().SetTitle(template.HTML(`<i class="icon fa fa-warning"></i> Error!`)).
+		alert := view.Get(Config.THEME).Alert().SetTitle(template.HTML(`<i class="icon fa fa-warning"></i> Error!`)).
 			SetTheme("warning").SetContent(template.HTML(errorMsg)).GetContent()
 
 		return types.Panel{

@@ -3,7 +3,7 @@ package models
 import (
 	"github.com/MexChina/Treasure/modules/config"
 	"github.com/MexChina/Treasure/modules/language"
-	"github.com/MexChina/Treasure/template"
+	"github.com/MexChina/Treasure/application/admin/view"
 	"github.com/MexChina/Treasure/application/admin/view/types"
 	"strconv"
 	"strings"
@@ -48,7 +48,7 @@ func GetManagerTable() (ManagerTable Table) {
 			ExcuFun: func(model types.RowModel) interface{} {
 				labelModel, _ := orm.GetConnection().Query("select r.name from role_users as u left join roles as r on "+
 					"u.role_id = r.id where user_id = ?", model.ID)
-				return string(template.Get("adminlte").Label().SetContent(labelModel[0]["name"].(string)).GetContent())
+				return string(view.Get("adminlte").Label().SetContent(labelModel[0]["name"].(string)).GetContent())
 			},
 		},
 		{

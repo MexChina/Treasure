@@ -6,7 +6,7 @@ import (
 	"github.com/MexChina/Treasure/modules/auth"
 	"github.com/MexChina/Treasure/modules/menu"
 	"github.com/MexChina/Treasure/application/admin/models"
-	"github.com/MexChina/Treasure/template"
+	"github.com/MexChina/Treasure/application/admin/view"
 	"github.com/MexChina/Treasure/application/admin/view/types"
 	"net/http"
 	"path"
@@ -57,14 +57,14 @@ func ShowInfo(ctx *context.Context) {
 	newUrl := Config.PREFIX + "/info/" + prefix + "/new" + GetRouteParameterString(page, pageSize, sortType, sortField)
 	deleteUrl := Config.PREFIX + "/delete/" + prefix
 
-	tmpl, tmplName := template.Get("adminlte").GetTemplate(ctx.Request.Header.Get("X-PJAX") == "true")
+	tmpl, tmplName := view.Get("adminlte").GetTemplate(ctx.Request.Header.Get("X-PJAX") == "true")
 
 	menu.GlobalMenu.SetActiveClass(ctx.Path())
 
-	dataTable := template.Get(Config.THEME).DataTable().SetInfoList(infoList).SetThead(thead).SetEditUrl(editUrl).SetNewUrl(newUrl).SetDeleteUrl(deleteUrl)
+	dataTable := view.Get(Config.THEME).DataTable().SetInfoList(infoList).SetThead(thead).SetEditUrl(editUrl).SetNewUrl(newUrl).SetDeleteUrl(deleteUrl)
 	table := dataTable.GetContent()
 
-	box := template.Get(Config.THEME).Box().
+	box := view.Get(Config.THEME).Box().
 		SetBody(table).
 		SetHeader(dataTable.GetDataTableHeader()).
 		WithHeadBorder(false).

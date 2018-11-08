@@ -13,8 +13,8 @@ import (
 	"github.com/MexChina/Treasure/application/admin/view/types"
 	"github.com/MexChina/Treasure/modules/config"
 	"github.com/MexChina/Treasure/modules/auth"
-	"github.com/MexChina/Treasure/template"
-	template2 "html/template"
+	"github.com/MexChina/Treasure/application/admin/view"
+	"html/template"
 	"github.com/MexChina/Treasure/modules/menu"
 )
 
@@ -165,8 +165,8 @@ func (fast *Fasthttp) Content(contextInterface interface{}, c types.GetPanel) {
 	var panel types.Panel
 
 	if !auth.CheckPermissions(user, string(ctx.Path()), string(ctx.Method())) {
-		alert := template.Get(globalConfig.THEME).Alert().SetTitle(template2.HTML(`<i class="icon fa fa-warning"></i> Error!`)).
-			SetTheme("warning").SetContent(template2.HTML("没有权限")).GetContent()
+		alert := view.Get(globalConfig.THEME).Alert().SetTitle(template.HTML(`<i class="icon fa fa-warning"></i> Error!`)).
+			SetTheme("warning").SetContent(template.HTML("没有权限")).GetContent()
 
 		panel = types.Panel{
 			Content:     alert,
@@ -177,7 +177,7 @@ func (fast *Fasthttp) Content(contextInterface interface{}, c types.GetPanel) {
 		panel = c()
 	}
 
-	tmpl, tmplName := template.Get(globalConfig.THEME).GetTemplate(string(ctx.Request.Header.Peek("X-PJAX")) == "true")
+	tmpl, tmplName := view.Get(globalConfig.THEME).GetTemplate(string(ctx.Request.Header.Peek("X-PJAX")) == "true")
 
 	ctx.Request.Header.Add("Content-Type", "text/html; charset=utf-8")
 

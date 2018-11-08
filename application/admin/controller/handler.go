@@ -8,7 +8,7 @@ import (
 	"github.com/MexChina/Treasure/modules/auth"
 	"github.com/MexChina/Treasure/modules/menu"
 	"github.com/MexChina/Treasure/application/admin/models"
-	"github.com/MexChina/Treasure/template"
+	"github.com/MexChina/Treasure/application/admin/view"
 	"github.com/MexChina/Treasure/application/admin/view/types"
 	template2 "html/template"
 	"net/http"
@@ -40,7 +40,7 @@ func GlobalDeferHandler(ctx *context.Context) {
 			logger.Alert(errMsg)
 		}
 
-		alert := template.Get(Config.THEME).Alert().SetTitle(template2.HTML(`<i class="icon fa fa-warning"></i> Error!`)).
+		alert := view.Get(Config.THEME).Alert().SetTitle(template2.HTML(`<i class="icon fa fa-warning"></i> Error!`)).
 			SetTheme("warning").SetContent(template2.HTML(errMsg)).GetContent()
 
 		if ok, _ = regexp.Match("/edit(.*)", []byte(ctx.Path())); ok {
@@ -53,7 +53,7 @@ func GlobalDeferHandler(ctx *context.Context) {
 
 			formData, title, description := models.TableList[prefix].GetDataFromDatabaseWithId(prefix, id)
 
-			tmpl, tmplName := template.Get("adminlte").GetTemplate(ctx.Request.Header.Get("X-PJAX") == "true")
+			tmpl, tmplName := view.Get("adminlte").GetTemplate(ctx.Request.Header.Get("X-PJAX") == "true")
 
 			path := ctx.Path()
 			menu.GlobalMenu.SetActiveClass(path)
@@ -88,7 +88,7 @@ func GlobalDeferHandler(ctx *context.Context) {
 					Config.VERSION,
 				},
 				Panel: types.Panel{
-					Content: alert + template.Get(Config.THEME).Form().
+					Content: alert + view.Get(Config.THEME).Form().
 						SetContent(formData).
 						SetPrefix(Config.PREFIX).
 						SetUrl(Config.PREFIX+"/edit/"+prefix).
@@ -113,7 +113,7 @@ func GlobalDeferHandler(ctx *context.Context) {
 
 			user := ctx.UserValue["user"].(auth.User)
 
-			tmpl, tmplName := template.Get("adminlte").GetTemplate(ctx.Request.Header.Get("X-PJAX") == "true")
+			tmpl, tmplName := view.Get("adminlte").GetTemplate(ctx.Request.Header.Get("X-PJAX") == "true")
 
 			path := ctx.Path()
 			menu.GlobalMenu.SetActiveClass(path)
@@ -148,7 +148,7 @@ func GlobalDeferHandler(ctx *context.Context) {
 					Config.VERSION,
 				},
 				Panel: types.Panel{
-					Content: alert + template.Get(Config.THEME).Form().
+					Content: alert + view.Get(Config.THEME).Form().
 						SetPrefix(Config.PREFIX).
 						SetContent(models.GetNewFormList(models.TableList[prefix].Form.FormList)).
 						SetUrl(Config.PREFIX+"/new/"+prefix).

@@ -4,7 +4,7 @@ import (
 	"github.com/MexChina/Treasure/modules/context"
 	"github.com/MexChina/Treasure/modules/auth"
 	"github.com/MexChina/Treasure/application/admin/controller"
-	"github.com/MexChina/Treasure/template"
+	"github.com/MexChina/Treasure/application/admin/view"
 )
 
 func InitRouter(prefix string) *context.App {
@@ -14,11 +14,11 @@ func InitRouter(prefix string) *context.App {
 		// auth
 		app.GET("/login", controller.ShowLogin)
 		app.POST("/signin", controller.Auth)
-		for _, path := range template.Get("adminlte").GetAssetList("adminlte") {
+		for _, path := range view.Get("adminlte").GetAssetList("adminlte") {
 			app.GET("/assets"+path, controller.Assert)
 		}
 
-		for _, path := range template.Get("adminlte").GetAssetList("login") {
+		for _, path := range view.Get("adminlte").GetAssetList("login") {
 			app.GET("/assets"+path, controller.Assert)
 		}
 		authenticator := auth.SetPrefix(prefix).SetAuthFailCallback(func(ctx *context.Context) {

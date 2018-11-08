@@ -7,7 +7,7 @@ import (
 	"github.com/MexChina/Treasure/modules/menu"
 	"github.com/MexChina/Treasure/application/admin/models"
 	"github.com/MexChina/Treasure/modules/uploader"
-	"github.com/MexChina/Treasure/template"
+	"github.com/MexChina/Treasure/application/admin/view"
 	"github.com/MexChina/Treasure/application/admin/view/types"
 	"net/http"
 	"strings"
@@ -21,7 +21,7 @@ func ShowNewForm(ctx *context.Context) {
 
 	prefix := ctx.Request.URL.Query().Get("prefix")
 
-	tmpl, tmplName := template.Get("adminlte").GetTemplate(ctx.Request.Header.Get("X-PJAX") == "true")
+	tmpl, tmplName := view.Get("adminlte").GetTemplate(ctx.Request.Header.Get("X-PJAX") == "true")
 
 	path := ctx.Path()
 	menu.GlobalMenu.SetActiveClass(path)
@@ -54,7 +54,7 @@ func ShowNewForm(ctx *context.Context) {
 			Config.VERSION,
 		},
 		Panel: types.Panel{
-			Content: template.Get(Config.THEME).Form().
+			Content: view.Get(Config.THEME).Form().
 				SetPrefix(Config.PREFIX).
 				SetContent(models.GetNewFormList(models.TableList[prefix].Form.FormList)).
 				SetUrl(Config.PREFIX + "/new/" + prefix).
@@ -145,12 +145,12 @@ func NewForm(ctx *context.Context) {
 	newUrl := Config.PREFIX + "/info/" + prefix + "/new" + GetRouteParameterString(page, pageSize, sortType, sort)
 	deleteUrl := Config.PREFIX + "/delete/" + prefix
 
-	tmpl, tmplName := template.Get("adminlte").GetTemplate(true)
+	tmpl, tmplName := view.Get("adminlte").GetTemplate(true)
 
-	dataTable := template.Get(Config.THEME).DataTable().SetInfoList(infoList).SetThead(thead).SetEditUrl(editUrl).SetNewUrl(newUrl).SetDeleteUrl(deleteUrl)
+	dataTable := view.Get(Config.THEME).DataTable().SetInfoList(infoList).SetThead(thead).SetEditUrl(editUrl).SetNewUrl(newUrl).SetDeleteUrl(deleteUrl)
 	table := dataTable.GetContent()
 
-	box := template.Get(Config.THEME).Box().
+	box := view.Get(Config.THEME).Box().
 		SetBody(table).
 		SetHeader(dataTable.GetDataTableHeader()).
 		WithHeadBorder(false).

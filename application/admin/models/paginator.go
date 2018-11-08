@@ -1,8 +1,8 @@
 package models
 
 import (
-	template2 "github.com/MexChina/Treasure/template"
-	"github.com/MexChina/Treasure/template/adminlte/components"
+	"github.com/MexChina/Treasure/application/admin/view"
+	"github.com/MexChina/Treasure/application/admin/view/components"
 	"github.com/MexChina/Treasure/application/admin/view/types"
 	"html/template"
 	"math"
@@ -11,7 +11,7 @@ import (
 
 func GetPaginator(path string, pageInt int, page, pageSize, sortField, sortType string, size int) types.PaginatorAttribute {
 
-	paginator := template2.Get("adminlte").Paginator().(*components.PaginatorAttribute)
+	paginator := view.Get("adminlte").Paginator().(*components.PaginatorAttribute)
 
 	pageSizeInt, _ := strconv.Atoi(pageSize)
 	totalPage := int(math.Ceil(float64(size) / float64(pageSizeInt)))
