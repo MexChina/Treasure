@@ -61,7 +61,7 @@ func (*Theme) GetTemplate(isPjax bool) (tmpler *template.Template, name string) 
 
 func (*Theme) GetHtml(name string) (tmpler *template.Template) {
 	cfg := config.Get()
-	pathsss, _ := filepath.Abs(cfg.ASSETS+"/pages/"+name+".html");
+	pathsss, _ := filepath.Abs(cfg.ASSETS+"/application/admin/view/html/"+name+".html");
 	tmpler,err := template.ParseFiles(pathsss)
 	if err != nil{
 		logger.Error(err)

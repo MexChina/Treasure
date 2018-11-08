@@ -40,7 +40,7 @@ func main() {
 			},
 		},
 		VERSION:"0.0.1",
-		ASSETS:"src/github.com/MexChina/Treasure/template/adminlte/resource",
+		ASSETS:"src/github.com/MexChina/Treasure",
 	}
 	router := fasthttprouter.New()
 	eng := engine.Default()
