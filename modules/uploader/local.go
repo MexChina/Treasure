@@ -1,4 +1,4 @@
-package file
+package uploader
 
 import (
 	"github.com/MexChina/Treasure/modules/config"

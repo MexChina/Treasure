@@ -1,9 +1,9 @@
 package auth
 
 import (
-	"github.com/MexChina/Treasure/context"
+	"github.com/MexChina/Treasure/modules/context"
 	"github.com/MexChina/Treasure/modules/config"
-	"github.com/MexChina/Treasure/application/admin/modules"
+	"github.com/MexChina/Treasure/modules/helper"
 	"golang.org/x/crypto/bcrypt"
 	"strconv"
 	"strings"
@@ -117,7 +117,7 @@ type CSRFToken []string
 var TokenHelper = new(CSRFToken)
 
 func (token *CSRFToken) AddToken() string {
-	tokenStr := modules.Uuid(35)
+	tokenStr := helper.Uuid(35)
 	if len(*token) == 1 && (*token)[0] == "" {
 		(*token)[0] = tokenStr
 	} else {

@@ -1,6 +1,6 @@
 package application
 import (
-	"github.com/MexChina/Treasure/context"
+	"github.com/MexChina/Treasure/modules/context"
 )
 
 type Application interface {

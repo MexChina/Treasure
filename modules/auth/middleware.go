@@ -1,7 +1,7 @@
 package auth
 
 import (
-	"github.com/MexChina/Treasure/context"
+	"github.com/MexChina/Treasure/modules/context"
 	"github.com/MexChina/Treasure/modules/config"
 	"regexp"
 	"strings"

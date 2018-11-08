@@ -1,7 +1,7 @@
 package controller
 
 import (
-	"github.com/MexChina/Treasure/context"
+	"github.com/MexChina/Treasure/modules/context"
 	"github.com/MexChina/Treasure/modules/page"
 	template2 "github.com/MexChina/Treasure/template"
 	"github.com/MexChina/Treasure/template/types"

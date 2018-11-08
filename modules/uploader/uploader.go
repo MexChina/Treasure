@@ -1,7 +1,7 @@
-package file
+package uploader
 
 import (
-	"github.com/MexChina/Treasure/application/admin/modules"
+	"github.com/MexChina/Treasure/modules/helper"
 	"io"
 	"mime/multipart"
 	"os"
@@ -32,7 +32,7 @@ func Upload(c UploadFun, form *multipart.Form) (*multipart.Form, error) {
 		fileObj := form.File[k][0]
 
 		suffix = path.Ext(fileObj.Filename)
-		filename = modules.Uuid(50) + suffix
+		filename = helper.Uuid(50) + suffix
 
 		pathStr, err := c(fileObj, filename)
 

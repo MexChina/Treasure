@@ -2,7 +2,7 @@ package controller
 
 import (
 	"encoding/json"
-	"github.com/MexChina/Treasure/context"
+	"github.com/MexChina/Treasure/modules/context"
 	"github.com/MexChina/Treasure/modules/auth"
 	"github.com/MexChina/Treasure/modules/orm"
 )

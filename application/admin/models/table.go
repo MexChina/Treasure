@@ -1,7 +1,7 @@
 package models
 
 import (
-	"github.com/MexChina/Treasure/application/admin/modules"
+	"github.com/MexChina/Treasure/modules/helper"
 	"github.com/MexChina/Treasure/template/types"
 	"html/template"
 	"strconv"
@@ -177,7 +177,7 @@ func (tableModel Table) GetDataFromDatabaseWithId(prefix string, id string) ([]t
 					Value: GetStringFromType(tableModel.Form.FormList[i].TypeName, res[0][tableModel.Form.FormList[i].Field]),
 				}).([]string)
 				for _, v := range tableModel.Form.FormList[i].Options {
-					if modules.InArray(valueArr, v["value"]) {
+					if helper.InArray(valueArr, v["value"]) {
 						v["selected"] = "selected"
 					}
 				}
@@ -194,7 +194,7 @@ func (tableModel Table) GetDataFromDatabaseWithId(prefix string, id string) ([]t
 					Value: GetStringFromType(tableModel.Form.FormList[i].TypeName, res[0][tableModel.Form.FormList[i].Field]),
 				}).([]string)
 				for _, v := range tableModel.Form.FormList[i].Options {
-					if modules.InArray(valueArr, v["value"]) {
+					if helper.InArray(valueArr, v["value"]) {
 						v["selected"] = "selected"
 					}
 				}
@@ -221,7 +221,7 @@ func (tableModel Table) UpdateDataFromDatabase(prefix string, dataList map[strin
 		if k != "id" && k != "_previous_" && k != "_method" && k != "_t" && CheckInTable(columns, k) {
 			fields += strings.Replace(k, "[]", "", -1) + " = ?,"
 			if len(v) > 0 {
-				valueList = append(valueList, strings.Join(modules.RemoveBlackFromArray(v), ","))
+				valueList = append(valueList, strings.Join(helper.RemoveBlackFromArray(v), ","))
 			} else {
 				valueList = append(valueList, v[0])
 			}

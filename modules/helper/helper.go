@@ -1,4 +1,4 @@
-package modules
+package helper
 
 import "github.com/NebulousLabs/fastrand"
 

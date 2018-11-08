@@ -2,11 +2,11 @@ package controller
 
 import (
 	"bytes"
-	"github.com/MexChina/Treasure/context"
+	"github.com/MexChina/Treasure/modules/context"
 	"github.com/MexChina/Treasure/modules/auth"
 	"github.com/MexChina/Treasure/modules/menu"
 	"github.com/MexChina/Treasure/application/admin/models"
-	"github.com/MexChina/Treasure/application/admin/modules/file"
+	"github.com/MexChina/Treasure/modules/uploader"
 	"github.com/MexChina/Treasure/template"
 	"github.com/MexChina/Treasure/template/types"
 	"net/http"
@@ -85,7 +85,7 @@ func EditForm(ctx *context.Context) {
 
 	// 处理上传文件，目前仅仅支持传本地
 	if len((*form).File) > 0 {
-		file.GetFileEngine("local").Upload(form)
+		uploader.GetFileEngine("local").Upload(form)
 	}
 
 	if prefix == "manager" { // 管理员管理编辑

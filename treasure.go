@@ -3,7 +3,7 @@ package main
 import (
 	"github.com/valyala/fasthttp"
 	"github.com/buaazp/fasthttprouter"
-	"github.com/MexChina/Treasure/engine"
+	"github.com/MexChina/Treasure/modules/engine"
 	"github.com/MexChina/Treasure/modules/config"
 	"github.com/MexChina/Treasure/application/admin"
 	"github.com/MexChina/Treasure/modules/logger"

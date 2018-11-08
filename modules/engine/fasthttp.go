@@ -5,7 +5,7 @@ import (
 	"errors"
 	"github.com/buaazp/fasthttprouter"
 	"github.com/valyala/fasthttp"
-	"github.com/MexChina/Treasure/context"
+	"github.com/MexChina/Treasure/modules/context"
 	"io"
 	"net/http"
 	"net/url"

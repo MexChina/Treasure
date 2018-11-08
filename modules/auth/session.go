@@ -2,9 +2,9 @@ package auth
 
 import (
 	"encoding/json"
-	"github.com/MexChina/Treasure/context"
+	"github.com/MexChina/Treasure/modules/context"
 	"github.com/MexChina/Treasure/modules/config"
-	"github.com/MexChina/Treasure/application/admin/modules"
+	"github.com/MexChina/Treasure/modules/helper"
 	"net/http"
 	"time"
 	"github.com/MexChina/Treasure/modules/orm"
@@ -79,7 +79,7 @@ func (ses *Session) StartCtx(ctx *context.Context) *Session {
 			ses.Values = valueFromDriver
 		}
 	} else {
-		ses.Sid = modules.Uuid(15)
+		ses.Sid = helper.Uuid(15)
 	}
 	ses.Context = ctx
 	return ses
